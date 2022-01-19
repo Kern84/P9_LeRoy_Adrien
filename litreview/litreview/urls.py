@@ -24,6 +24,8 @@ from django.contrib.auth.views import (
     PasswordChangeDoneView,
     PasswordChangeView,
 )
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -51,4 +53,22 @@ urlpatterns = [
         name="password_change_done",
     ),
     path("signup/", authentication.views.signup_page, name="signup"),
+    path(
+        "publication/create-ticket/",
+        publication.views.create_ticket,
+        name="create_ticket",
+    ),
+    path(
+        "publication/create-review/",
+        publication.views.create_review,
+        name="create_review",
+    ),
+    path(
+        "publication/<int:review_id>",
+        publication.views.view_review,
+        name="view_review",
+    ),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

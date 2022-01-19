@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ review.headline }}</h2>
+<p>{{ review.rating }}</p>
+<img src="{{ review.ticket.image.url }}" alt="IMG">
+<p>{{ review.body }}</p>
+{% endblock content %}

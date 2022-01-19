@@ -13,3 +13,4 @@ désactiver l'environnement virtuel, quand vous avez fini de consulter le projet
 2 - Utilisateur
 adrien
 mot de passe = S3cret!
+superuser = toto, mot de passe = toto
