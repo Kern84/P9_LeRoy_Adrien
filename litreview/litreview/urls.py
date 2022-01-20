@@ -68,6 +68,12 @@ urlpatterns = [
         publication.views.view_review,
         name="view_review",
     ),
+    path(
+        "publication/<int:review_id>/edit",
+        publication.views.edit_review,
+        name="edit_review",
+    ),
+    path("follow-users/", authentication.views.follow_users, name="follow_users"),
 ]
 
 if settings.DEBUG:

@@ -1,20 +1,31 @@
+{% load static %}
 <html>
 
 <head>
     <title>LITReview</title>
+    <link rel="stylesheet" href="{% static 'publication/styles.css' %}">
 </head>
 
 <body>
-    <h1>LITReview</h1>
-    {% block content %}{% endblock content %}
     {% if user.is_authenticated %}
-    <p><a href="{% url 'home' %}">Flux</a></p>
-    <p><a href="{% url 'logout' %}">Se déconnecter</a></p>
-    <p><a href="{% url 'create_review' %}">Écrire une critique</a></p>
-    <p><a href="{% url 'create_ticket' %}">Créer un ticket</a></p>
-    <p>Vous êtes connecté en tant que {{ request.user }}.</p>
-    <p>Voulez-vous <a href="{% url 'password_change' %}">changer votre mot de passe ?</a></p>
-    {% endif %}
+    <div class="global">
+        <nav>
+            <h1 class="navigation_left">LITReview</h1>
+            <ul class=navigation_right>
+                <li class="navigation"><a href="{% url 'home' %}">Flux</a></li>
+                <li class="navigation">Post pas encore fait</li>
+                <li class="navigation"><a href="{% url 'follow_users' %}">Suivre d'autres utilisateurs</a></li>
+                <li class="navigation"><a href="{% url 'password_change' %}">Changer de mot de passe</a></li>
+                <li class="navigation"><a href="{% url 'logout' %}">Se déconnecter</a></li>
+            </ul>
+        </nav>
+        <div class="container">
+            <p class="creation"><a href="{% url 'create_ticket' %}">Demander une critique</a></p>
+            <p class="creation"><a href="{% url 'create_review' %}">Créer une critique</a></p>
+        </div>
+        {% endif %}
+        {% block content %}{% endblock content %}
+    </div>
 </body>
 
 </html>

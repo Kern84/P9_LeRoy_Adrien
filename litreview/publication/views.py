@@ -55,3 +55,26 @@ def create_review(request):
 def view_review(request, review_id):
     review = get_object_or_404(models.Review, id=review_id)
     return render(request, "publication/view_review.html", {"review": review})
+
+
+@login_required
+def edit_review(request, review_id):
+    review = get_object_or_404(models.Review, id=review_id)
+    edit_form = forms.ReviewForm(instance=review)
+    delete_form = forms.DeleteReviewForm()
+    if request.method == "POST":
+        if "edit_review" in request.POST:
+            edit_form = forms.ReviewForm(request.POST, instance=review)
+            if edit_form.is_valid():
+                edit_form.save()
+                return redirect("home")
+        if "delete_review" in request.POST:
+            delete_form = forms.DeleteReviewForm(request.POST)
+            if delete_form.is_valid():
+                review.delete()
+                return redirect("home")
+    context = {
+        "edit_form": edit_form,
+        "delete_form": delete_form,
+    }
+    return render(request, "publication/edit_review.html", context=context)

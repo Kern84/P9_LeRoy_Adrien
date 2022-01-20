@@ -4,8 +4,9 @@
 <div class="grid-container">
     {% for ticket in tickets %}
     <div class="post">
-        <p>{{ ticket.title }}</p>
-        <p>{{ ticket.description }}</p>
+        <p>{{ ticket.user }} à demandé une critique</p>
+        <p>Titre : {{ ticket.title }}</p>
+        <p>Description : {{ ticket.description }}</p>
         <img src="{{ ticket.image.url }}" alt="IMG">
     </div>
     {% endfor %}

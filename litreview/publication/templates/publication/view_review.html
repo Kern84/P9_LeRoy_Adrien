@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
+<p>{{ review.user }} à publié une critique (changer la phrase si "vous")</p>
 <h2>{{ review.headline }}</h2>
 <p>{{ review.rating }}</p>
 <img src="{{ review.ticket.image.url }}" alt="IMG">
 <p>{{ review.body }}</p>
+<p>{{ review.ticket }} insérer le ticket</p>
+<p><a href="{% url 'edit_review' review.id %}">Modifier la critique (ne pas montrer si pas "vous")</a></p>
 {% endblock content %}

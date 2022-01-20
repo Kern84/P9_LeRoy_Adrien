@@ -1,0 +1,51 @@
+/* For the entire site */
+.global{
+    max-width: 80%;
+    text-align: center;
+    border: 1px black solid;
+    margin: auto;
+}
+
+/* Navigation bar */
+nav{
+    border: 1px black solid;
+    padding: 30px;
+}
+ul{
+    list-style-type: none;
+}
+.navigation {
+    display: inline-block;
+}
+a{
+    padding: 20px;
+}
+.navigation_left{
+    display: inline-block;
+}
+.navigation_right{
+    display: inline-block;
+}
+
+/* Create buttons */
+.creation a{
+    border: solid black 1px;
+    display: auto;
+}
+.container{
+    display: flex;
+    padding: 50px;
+    border: solid black 1px;
+}
+.creation{
+    flex-grow: 1;
+}
+
+/* Flux */
+.grid-container{
+    padding: 20px;
+    border: solid black 1px;
+}
+.post{
+    border: solid black 1px;
+}
