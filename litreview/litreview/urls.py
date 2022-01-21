@@ -73,6 +73,11 @@ urlpatterns = [
         publication.views.edit_review,
         name="edit_review",
     ),
+    path(
+        "publication/<int:ticket_id>/edit",
+        publication.views.edit_ticket,
+        name="edit_ticket",
+    ),
     path("follow-users/", authentication.views.follow_users, name="follow_users"),
 ]
 

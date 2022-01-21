@@ -15,6 +15,18 @@ def home(request):
     )
 
 
+"""    reviews = models.Review.objects.filter(user__in=request.user.all())
+    tickets = models.Ticket.objects.filter(
+        user__in=request.user.all()
+    )  # .exclude(review__in=reviews)
+    context = {
+        "reviews": reviews,
+        "tickets": tickets,
+    }
+    return render(request, "publication/home.html", context=context)
+"""
+
+
 @login_required
 def create_ticket(request):
     form = forms.TicketForm()
@@ -78,3 +90,26 @@ def edit_review(request, review_id):
         "delete_form": delete_form,
     }
     return render(request, "publication/edit_review.html", context=context)
+
+
+@login_required
+def edit_ticket(request, ticket_id):
+    ticket = get_object_or_404(models.Ticket, id=ticket_id)
+    edit_form = forms.TicketForm(instance=ticket)
+    delete_form = forms.DeleteTicketForm()
+    if request.method == "POST":
+        if "edit_ticket" in request.POST:
+            edit_form = forms.TicketForm(request.POST, instance=ticket)
+            if edit_form.is_valid():
+                edit_form.save()
+                return redirect("home")
+        if "delete_ticket" in request.POST:
+            delete_form = forms.DeleteTicketForm(request.POST)
+            if delete_form.is_valid():
+                ticket.delete()
+                return redirect("home")
+    context = {
+        "edit_form": edit_form,
+        "delete_form": delete_form,
+    }
+    return render(request, "publication/edit_ticket.html", context=context)

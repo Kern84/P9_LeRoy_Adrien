@@ -11,6 +11,6 @@ automatiquement les packages requis à l'exécution du programme. Entrer la lign
 désactiver l'environnement virtuel, quand vous avez fini de consulter le projet.
 
 2 - Utilisateur
-adrien
-mot de passe = S3cret!
+utilisateur 1 = adrien, mot de passe = S3cret!
+utilisateur 2 = michel, mot de passe = S3cret!2
 superuser = toto, mot de passe = toto

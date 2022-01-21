@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, Group
+from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
 
@@ -10,12 +10,6 @@ class User(AbstractUser):
     ROLE_CHOICES = ((SUBSCRIBER, "Abonné"),)
 
     role = models.CharField(max_length=30, choices=ROLE_CHOICES, verbose_name="Rôle")
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        if self.role == self.SUBSCRIBER:
-            group = Group.objects.get(name="subscribers")
-            group.user_set.add(self)
 
 
 class UserFollows(models.Model):

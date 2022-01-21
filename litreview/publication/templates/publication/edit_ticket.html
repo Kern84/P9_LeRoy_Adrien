@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Modifier la critique</h2>
+<h2>Modifier la demande</h2>
 <form method="post">
     {{ edit_form.as_p }}
     {% csrf_token %}
@@ -8,7 +8,7 @@
 </form>
 <button type="submit"><a href="{% url 'home' %}">Retour</a></button>
 <hr>
-<h3>Supprimer la critique ?</h3>
+<h3>Supprimer la demande ?</h3>
 <form method="post">
     {{ delete_form }}
     {% csrf_token %}
