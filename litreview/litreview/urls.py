@@ -59,24 +59,29 @@ urlpatterns = [
         name="create_ticket",
     ),
     path(
+        "publication/ticket/<int:ticket_id>",
+        publication.views.view_ticket,
+        name="view_ticket",
+    ),
+    path(
+        "publication/ticket/<int:ticket_id>/edit",
+        publication.views.edit_ticket,
+        name="edit_ticket",
+    ),
+    path(
         "publication/create-review/",
         publication.views.create_review,
         name="create_review",
     ),
     path(
-        "publication/<int:review_id>",
+        "publication/review/<int:review_id>",
         publication.views.view_review,
         name="view_review",
     ),
     path(
-        "publication/<int:review_id>/edit",
+        "publication/review/<int:review_id>/edit",
         publication.views.edit_review,
         name="edit_review",
-    ),
-    path(
-        "publication/<int:ticket_id>/edit",
-        publication.views.edit_ticket,
-        name="edit_ticket",
     ),
     path("follow-users/", authentication.views.follow_users, name="follow_users"),
 ]

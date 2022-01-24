@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<p>Modifiez votre demande</p>
+<h2>{{ ticket.title }}</h2>
+<p>{{ ticket.description }}</p>
+<img src="{{ ticket.image.url }}" alt="IMG">
+<p><a href="{% url 'edit_ticket' ticket.id %}">Modifier la demande (ne pas montrer si pas "vous")</a></p>
+<button type="submit"><a href="{% url 'home' %}">Retour</a></button>
+{% endblock content %}

@@ -7,4 +7,5 @@
 <p>{{ review.body }}</p>
 <p>{{ review.ticket }} insérer le ticket</p>
 <p><a href="{% url 'edit_review' review.id %}">Modifier la critique (ne pas montrer si pas "vous")</a></p>
+<button type="submit"><a href="{% url 'home' %}">Retour</a></button>
 {% endblock content %}

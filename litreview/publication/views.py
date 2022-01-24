@@ -70,18 +70,24 @@ def view_review(request, review_id):
 
 
 @login_required
+def view_ticket(request, ticket_id):
+    ticket = get_object_or_404(models.Ticket, id=ticket_id)
+    return render(request, "publication/view_ticket.html", {"ticket": ticket})
+
+
+@login_required
 def edit_review(request, review_id):
     review = get_object_or_404(models.Review, id=review_id)
     edit_form = forms.ReviewForm(instance=review)
-    delete_form = forms.DeleteReviewForm()
+    delete_form = forms.DeleteForm()
     if request.method == "POST":
         if "edit_review" in request.POST:
             edit_form = forms.ReviewForm(request.POST, instance=review)
             if edit_form.is_valid():
                 edit_form.save()
                 return redirect("home")
-        if "delete_review" in request.POST:
-            delete_form = forms.DeleteReviewForm(request.POST)
+        if "delete" in request.POST:
+            delete_form = forms.DeleteForm(request.POST)
             if delete_form.is_valid():
                 review.delete()
                 return redirect("home")
@@ -96,15 +102,15 @@ def edit_review(request, review_id):
 def edit_ticket(request, ticket_id):
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
     edit_form = forms.TicketForm(instance=ticket)
-    delete_form = forms.DeleteTicketForm()
+    delete_form = forms.DeleteForm()
     if request.method == "POST":
         if "edit_ticket" in request.POST:
             edit_form = forms.TicketForm(request.POST, instance=ticket)
             if edit_form.is_valid():
                 edit_form.save()
                 return redirect("home")
-        if "delete_ticket" in request.POST:
-            delete_form = forms.DeleteTicketForm(request.POST)
+        if "delete" in request.POST:
+            delete_form = forms.DeleteForm(request.POST)
             if delete_form.is_valid():
                 ticket.delete()
                 return redirect("home")

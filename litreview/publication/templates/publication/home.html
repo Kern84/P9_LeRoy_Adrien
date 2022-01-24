@@ -5,10 +5,10 @@
     {% for ticket in tickets %}
     <div class="post">
         <p>{{ ticket.user }} à demandé une critique</p>
-        <h4>Titre : {{ ticket.title }}</h4>
-        <p>{{ ticket.description }}</p>
-        <img src="{{ ticket.image.url }}" alt="IMG">
-        <a href="{% url 'edit_ticket' ticket.id %}">Modifier la demande</a>
+        <a href="{% url 'view_ticket' ticket.id %}">
+            <h4>Titre : {{ ticket.title }}</h4>
+            <img src="{{ ticket.image.url }}" alt="IMG">
+        </a>
     </div>
     {% endfor %}
 </div>

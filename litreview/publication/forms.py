@@ -20,9 +20,5 @@ class ReviewForm(forms.ModelForm):
         fields = ["headline", "rating", "body"]
 
 
-class DeleteReviewForm(forms.Form):
-    delete_review = forms.BooleanField(widget=forms.HiddenInput, initial=True)
-
-
-class DeleteTicketForm(forms.Form):
-    delete_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True)
+class DeleteForm(forms.Form):
+    delete = forms.BooleanField(widget=forms.HiddenInput, initial=True)
