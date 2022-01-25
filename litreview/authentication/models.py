@@ -11,9 +11,21 @@ class User(AbstractUser):
 
     role = models.CharField(max_length=30, choices=ROLE_CHOICES, verbose_name="Rôle")
 
+    # follows = models.ManyToManyField(
+    #    "UserFollows", symmetrical=False, verbose_name="suivre"
+    # )
+    following_user = models.ManyToManyField(
+        "self",
+        symmetrical=False,
+        verbose_name="suivre",
+    )
+    # followed_user = models.ManyToManyField(
+    #    "self", symmetrical=False, verbose_name="suivi par"
+    # )
 
-class UserFollows(models.Model):
-    user = models.ForeignKey(
+
+"""class UserFollows(models.Model):
+    following_user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="following"
     )
     followed_user = models.ForeignKey(
@@ -23,9 +35,8 @@ class UserFollows(models.Model):
     )
 
     class Meta:
-        # ensures we don't get multiple UserFollows instances
-        # for unique user-user_followed pairs
         unique_together = (
-            "user",
+            "following_user",
             "followed_user",
         )
+"""

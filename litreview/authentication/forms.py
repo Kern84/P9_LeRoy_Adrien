@@ -10,7 +10,12 @@ class SignupForm(UserCreationForm):
         fields = ("username", "role")
 
 
+User = get_user_model()
+
+
 class FollowUserForm(forms.ModelForm):
     class Meta:
-        model = models.UserFollows
-        fields = ["user"]
+        model = User
+        fields = ["following_user"]
+        # model = models.UserFollows
+        # fields = ["following_user"]

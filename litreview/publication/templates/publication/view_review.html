@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-<p>{{ review.user }} à publié une critique (changer la phrase si "vous")</p>
 <h2>{{ review.headline }}</h2>
-<p>{{ review.rating }}</p>
+<p class="ratings">Rating : {{ review.rating }} / 5</p>
 <img src="{{ review.ticket.image.url }}" alt="IMG">
 <p>{{ review.body }}</p>
 <p>{{ review.ticket }} insérer le ticket</p>

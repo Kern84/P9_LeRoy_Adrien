@@ -1,29 +1,37 @@
+from itertools import chain
 from django.forms import forms
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from . import forms, models
+from django.core.paginator import Paginator
 
 
 @login_required
 def home(request):
-    tickets = models.Ticket.objects.all()
+    reviews = models.Review.objects.filter(user__in=request.user.following_user.all())
+    tickets = models.Ticket.objects.filter(
+        user__in=request.user.following_user.all()
+    ).exclude(review__in=reviews)
+    reviews_and_tickets = sorted(
+        chain(reviews, tickets),
+        key=lambda instance: instance.time_created,
+        reverse=True,
+    )
+    paginator = Paginator(reviews_and_tickets, 5)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {"page_obj": page_obj}
+    return render(request, "publication/home.html", context=context)
+
+
+"""    tickets = models.Ticket.objects.all()
     reviews = models.Review.objects.all()
     return render(
         request,
         "publication/home.html",
         context={"tickets": tickets, "reviews": reviews},
     )
-
-
-"""    reviews = models.Review.objects.filter(user__in=request.user.all())
-    tickets = models.Ticket.objects.filter(
-        user__in=request.user.all()
-    )  # .exclude(review__in=reviews)
-    context = {
-        "reviews": reviews,
-        "tickets": tickets,
-    }
-    return render(request, "publication/home.html", context=context)
 """
 
 
