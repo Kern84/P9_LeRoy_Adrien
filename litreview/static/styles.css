@@ -5,8 +5,22 @@
     border: 1px black solid;
     margin: auto;
 }
-body{
-    background-color: red;
+a{
+    text-decoration: none;
+    color: black;
+}
+a:visited{
+    color: black;
+}
+.modify{
+    border: 1px black solid;
+    max-width: max-content;
+    margin: 20px auto;
+}
+.answer{
+    border: 1px black solid;
+    max-width: max-content;
+    margin: 20px auto;
 }
 
 /* Navigation bar */
@@ -57,5 +71,23 @@ a{
 /* Etoiles */
 .ratings{
     background: U+2727;
-    background-color: red;
+    background: U+2726;
+}
+
+/* Inside the review */
+.review{
+    border: solid black 1px;
+}
+.ticket_in_review{
+    border: solid black 3px;
+    max-width: 60%;
+    margin-left: auto;
+}
+.heading{
+    display: inline-flex;
+    font-size: 0.8em;
+    width: auto;
+}
+.heading p{
+    padding: 0 50px;
 }

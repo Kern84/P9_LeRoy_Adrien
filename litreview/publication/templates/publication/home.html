@@ -6,20 +6,24 @@
     {% for instance in page_obj %}
     {% if instance|model_type == 'Review' %}
     <div class="post">
-        <p>{{ instance.user }} à publié une critique</p>
+        <div class="heading">
+            <p>{{ instance.user }} à publié une critique</p>
+            <p>{{ instance.time_created }}</p>
+        </div>
         <a href="{% url 'view_review' instance.id %}">
             <h4>Critique : {{ instance.headline }}</h4>
             <img src="{{ instance.ticket.image.url }}">
-            <p>{{ instance.time_created }}</p>
         </a>
     </div>
     {% elif instance|model_type == 'Ticket' %}
     <div class="post">
-        <p>{{ instance.user }} à demandé une critique</p>
+        <div class="heading">
+            <p>{{ instance.user }} à demandé une critique</p>
+            <p>{{ instance.time_created }}</p>
+        </div>
         <a href="{% url 'view_ticket' instance.id %}">
             <h4>Titre : {{ instance.title }}</h4>
             <img src="{{ instance.image.url }}" alt="IMG">
-            <p>{{ instance.time_created }}</p>
     </div>
     {% endif %}
     {% endfor %}

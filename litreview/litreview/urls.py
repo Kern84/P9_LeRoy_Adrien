@@ -38,6 +38,7 @@ urlpatterns = [
     ),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("home/", publication.views.home, name="home"),
+    path("post/", publication.views.post, name="post"),
     path(
         "change-password/",
         PasswordChangeView.as_view(
@@ -82,6 +83,11 @@ urlpatterns = [
         "publication/review/<int:review_id>/edit",
         publication.views.edit_review,
         name="edit_review",
+    ),
+    path(
+        "publication/ticket/<int:ticket_id>/answer/",
+        publication.views.answer_ticket,
+        name="answer_ticket",
     ),
     path("follow-users/", authentication.views.follow_users, name="follow_users"),
 ]

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Répondre à une demande</h2>
+<h3>{{ user.username }} est en train de poster une réponse à :</h3>
+<div class="ticket_in_review">
+    <div class="heading">
+        <p>Demande de critique de {{ ticket.user }}</p>
+        <p>{{ ticket.time_created }}</p>
+    </div>
+    <p>{{ ticket.title }}</p>
+    <p>{{ ticket.description }}</p>
+    <img src="{{ ticket.image.url }}" alt="IMG">
+</div>
+<h3>Critique</h3>
+<form method="post">
+    {{ review_form.as_p }}
+    {% csrf_token %}
+    <button type="submit">Envoyer</button>
+</form>
+<button type="submit"><a href="{% url 'home' %}">Retour</a></button>
+{% endblock content %}

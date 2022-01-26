@@ -1,10 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>{{ review.headline }}</h2>
-<p class="ratings">Rating : {{ review.rating }} / 5</p>
-<img src="{{ review.ticket.image.url }}" alt="IMG">
-<p>{{ review.body }}</p>
-<p>{{ review.ticket }} insérer le ticket</p>
-<p><a href="{% url 'edit_review' review.id %}">Modifier la critique (ne pas montrer si pas "vous")</a></p>
-<button type="submit"><a href="{% url 'home' %}">Retour</a></button>
+<div class="review">
+    <div class="heading">
+        <p>{{ review.user }} à publié une critique</p>
+        <p>{{ review.time_created }}</p>
+    </div>
+    <h2>{{ review.headline }}</h2>
+    <p class="ratings">Rating : {{ review.rating }} / 5</p>
+    <img src="{{ review.ticket.image.url }}" alt="IMG">
+    <p>{{ review.body }}</p>
+    <div class="ticket_in_review">
+        <div class="heading">
+            <p>Demande de critique de {{ review.ticket.user }}</p>
+            <p>{{ review.ticket.time_created }}</p>
+        </div>
+        <p>{{ review.ticket.title }}</p>
+        <p>{{ review.ticket.description }}</p>
+    </div>
+    <p class="modify"><a href="{% url 'edit_review' review.id %}">Modifier la critique (ne pas montrer si pas
+            "vous")</a></p>
+    <button type="submit"><a href="{% url 'home' %}">Retour</a></button>
+</div>
 {% endblock content %}

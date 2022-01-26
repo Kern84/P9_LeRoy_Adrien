@@ -36,6 +36,25 @@ def home(request):
 
 
 @login_required
+def post(request):
+    reviews = models.Review.objects.filter(user=request.user)
+    tickets = models.Ticket.objects.filter(user=request.user).exclude(
+        review__in=reviews
+    )
+    reviews_and_tickets = sorted(
+        chain(reviews, tickets),
+        key=lambda instance: instance.time_created,
+        reverse=True,
+    )
+    paginator = Paginator(reviews_and_tickets, 5)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {"page_obj": page_obj}
+    return render(request, "publication/post.html", context=context)
+
+
+@login_required
 def create_ticket(request):
     form = forms.TicketForm()
     if request.method == "POST":
@@ -127,3 +146,21 @@ def edit_ticket(request, ticket_id):
         "delete_form": delete_form,
     }
     return render(request, "publication/edit_ticket.html", context=context)
+
+
+@login_required
+def answer_ticket(request, ticket_id):
+    ticket = get_object_or_404(models.Ticket, id=ticket_id)
+    review_form = forms.ReviewForm()
+    if request.method == "POST":
+        review_form = forms.ReviewForm(request.POST)
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.user = request.user
+            review.save()
+            return redirect("home")
+    context = {
+        "ticket": ticket,
+        "review_form": review_form,
+    }
+    return render(request, "publication/answer_ticket.html", context=context)
