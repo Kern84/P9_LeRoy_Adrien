@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
+{% load publication_extras %}
 {% block content %}
 <div class="review">
     <div class="heading">
-        <p>{{ review.user }} à publié une critique</p>
+        {% if review.user == user %}
+        <p>{% get_poster_display review.user %} avez publié une critique</p>
+        {% else %}
+        <p>{{ review.user }} a publié une critique</p>
+        {% endif %}
         <p>{{ review.time_created }}</p>
     </div>
     <h2>{{ review.headline }}</h2>
@@ -11,14 +16,19 @@
     <p>{{ review.body }}</p>
     <div class="ticket_in_review">
         <div class="heading">
-            <p>Demande de critique de {{ review.ticket.user }}</p>
+            {% if review.ticket.user == user %}
+            <p>{% get_poster_display review.ticket.user %} avez demandé une critique</p>
+            {% else %}
+            <p>{{ review.ticket.user }} a demandé une critique</p>
+            {% endif %}
             <p>{{ review.ticket.time_created }}</p>
         </div>
         <p>{{ review.ticket.title }}</p>
         <p>{{ review.ticket.description }}</p>
     </div>
-    <p class="modify"><a href="{% url 'edit_review' review.id %}">Modifier la critique (ne pas montrer si pas
-            "vous")</a></p>
+    {% if review.user == user %}
+    <p class="modify"><a href="{% url 'edit_review' review.id %}">Modifier la critique</a></p>
+    {% endif %}
     <button type="submit"><a href="{% url 'home' %}">Retour</a></button>
 </div>
 {% endblock content %}

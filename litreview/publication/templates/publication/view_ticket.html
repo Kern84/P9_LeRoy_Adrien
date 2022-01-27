@@ -1,13 +1,20 @@
 {% extends 'base.html' %}
+{% load publication_extras %}
 {% block content %}
 <div class="heading">
-    <p>Demande de critique de {{ ticket.user }}</p>
+    {% if ticket.user == user %}
+    <p>{% get_poster_display ticket.user %} avez demandé une critique</p>
+    {% else %}
+    <p>{{ ticket.user }} a demandé une critique</p>
+    {% endif %}
     <p>{{ ticket.time_created }}</p>
 </div>
 <h2>{{ ticket.title }}</h2>
 <p>{{ ticket.description }}</p>
 <img src="{{ ticket.image.url }}" alt="IMG">
 <p class="answer"><a href="{% url 'answer_ticket' ticket.id %}">Répondre à la demande</a></p>
-<p class="modify"><a href="{% url 'edit_ticket' ticket.id %}">Modifier la demande (ne pas montrer si pas "vous")</a></p>
+{% if ticket.user == user %}
+<p class="modify"><a href="{% url 'edit_ticket' ticket.id %}">Modifier la demande</a></p>
+{% endif %}
 <button type="submit"><a href="{% url 'home' %}">Retour</a></button>
 {% endblock content %}

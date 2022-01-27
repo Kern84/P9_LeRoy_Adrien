@@ -25,22 +25,10 @@ def home(request):
     return render(request, "publication/home.html", context=context)
 
 
-"""    tickets = models.Ticket.objects.all()
-    reviews = models.Review.objects.all()
-    return render(
-        request,
-        "publication/home.html",
-        context={"tickets": tickets, "reviews": reviews},
-    )
-"""
-
-
 @login_required
 def post(request):
     reviews = models.Review.objects.filter(user=request.user)
-    tickets = models.Ticket.objects.filter(user=request.user).exclude(
-        review__in=reviews
-    )
+    tickets = models.Ticket.objects.filter(user=request.user)
     reviews_and_tickets = sorted(
         chain(reviews, tickets),
         key=lambda instance: instance.time_created,
@@ -63,7 +51,7 @@ def create_ticket(request):
             ticket = form.save(commit=False)
             ticket.user = request.user
             ticket.save()
-            return redirect("home")
+            return redirect("post")
     return render(request, "publication/create_ticket.html", context={"form": form})
 
 
@@ -82,7 +70,7 @@ def create_review(request):
             review.user = request.user
             review.ticket = ticket
             review.save()
-            return redirect("home")
+            return redirect("post")
     context = {
         "ticket_form": ticket_form,
         "review_form": review_form,
@@ -112,12 +100,12 @@ def edit_review(request, review_id):
             edit_form = forms.ReviewForm(request.POST, instance=review)
             if edit_form.is_valid():
                 edit_form.save()
-                return redirect("home")
+                return redirect("post")
         if "delete" in request.POST:
             delete_form = forms.DeleteForm(request.POST)
             if delete_form.is_valid():
                 review.delete()
-                return redirect("home")
+                return redirect("post")
     context = {
         "edit_form": edit_form,
         "delete_form": delete_form,
@@ -135,12 +123,12 @@ def edit_ticket(request, ticket_id):
             edit_form = forms.TicketForm(request.POST, instance=ticket)
             if edit_form.is_valid():
                 edit_form.save()
-                return redirect("home")
+                return redirect("post")
         if "delete" in request.POST:
             delete_form = forms.DeleteForm(request.POST)
             if delete_form.is_valid():
                 ticket.delete()
-                return redirect("home")
+                return redirect("post")
     context = {
         "edit_form": edit_form,
         "delete_form": delete_form,
@@ -157,8 +145,9 @@ def answer_ticket(request, ticket_id):
         if review_form.is_valid():
             review = review_form.save(commit=False)
             review.user = request.user
+            review.ticket = ticket
             review.save()
-            return redirect("home")
+            return redirect("post")
     context = {
         "ticket": ticket,
         "review_form": review_form,

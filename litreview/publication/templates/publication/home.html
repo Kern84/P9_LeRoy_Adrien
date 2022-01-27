@@ -7,7 +7,11 @@
     {% if instance|model_type == 'Review' %}
     <div class="post">
         <div class="heading">
+            {% if review.user == user %}
+            <p>{% get_poster_display instance.user %} avez publié une critique</p>
+            {% else %}
             <p>{{ instance.user }} à publié une critique</p>
+            {% endif %}
             <p>{{ instance.time_created }}</p>
         </div>
         <a href="{% url 'view_review' instance.id %}">
@@ -18,7 +22,11 @@
     {% elif instance|model_type == 'Ticket' %}
     <div class="post">
         <div class="heading">
+            {% if instance.user == user %}
+            <p>{% get_poster_display instance.user %} avez demandé une critique</p>
+            {% else %}
             <p>{{ instance.user }} à demandé une critique</p>
+            {% endif %}
             <p>{{ instance.time_created }}</p>
         </div>
         <a href="{% url 'view_ticket' instance.id %}">
