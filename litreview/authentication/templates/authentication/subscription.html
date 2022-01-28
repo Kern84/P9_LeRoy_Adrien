@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Abonnements</h2>
+<h3>Suivre d'autres utilisateurs</h3>
+<form method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <button type="submit">Envoyer</button>
+</form>
+<h3>Abonnements</h3>
+{% for sub in subscriber %}
+<ul>
+    <li>{{ sub }} <a href="{% url 'subscription' %}">Désabonner</a></li>
+</ul>
+{% endfor %}
+<h3>Abonnés</h3>
+{% for subs in subscription %}
+<ul>
+    <li>{{ subs }}</li>
+</ul>
+{% endfor %}
+{% endblock content %}

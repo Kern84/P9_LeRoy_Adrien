@@ -39,6 +39,7 @@ urlpatterns = [
     path("logout/", LogoutView.as_view(), name="logout"),
     path("home/", publication.views.home, name="home"),
     path("post/", publication.views.post, name="post"),
+    path("subscription/", authentication.views.subscriptions, name="subscription"),
     path(
         "change-password/",
         PasswordChangeView.as_view(
@@ -89,7 +90,6 @@ urlpatterns = [
         publication.views.answer_ticket,
         name="answer_ticket",
     ),
-    path("follow-users/", authentication.views.follow_users, name="follow_users"),
 ]
 
 if settings.DEBUG:

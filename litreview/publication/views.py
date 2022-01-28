@@ -4,11 +4,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from . import forms, models
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 
 @login_required
 def home(request):
-    reviews = models.Review.objects.filter(user__in=request.user.following_user.all())
+    reviews = models.Review.objects.filter(
+        Q(user__in=request.user.following_user.all()) | Q(user=request.user)
+    )
     tickets = models.Ticket.objects.filter(
         user__in=request.user.following_user.all()
     ).exclude(review__in=reviews)

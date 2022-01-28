@@ -10,12 +10,11 @@ class SignupForm(UserCreationForm):
         fields = ("username", "role")
 
 
-User = get_user_model()
-
-
 class FollowUserForm(forms.ModelForm):
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ["following_user"]
-        # model = models.UserFollows
-        # fields = ["following_user"]
+
+
+class Unsubscribe(forms.Form):
+    unsubscribe = forms.BooleanField(widget=forms.HiddenInput, initial=True)
