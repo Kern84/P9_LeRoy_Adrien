@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
-from . import models
+from .models import UserFollows, User
 
 
 class SignupForm(UserCreationForm):
@@ -10,10 +10,20 @@ class SignupForm(UserCreationForm):
         fields = ("username", "role")
 
 
-class FollowUserForm(forms.ModelForm):
+"""class UserFollowsForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = ["following_user"]
+"""
+
+
+class UserFollowsForm(forms.ModelForm):
+    class Meta:
+        model = UserFollows
+        fields = ["user", "followed_user"]
+        labels = {"followed_user": "Utilisateur à suivre :"}
+        exclude = ["user"]
+        # widgets = {"followed_user": forms.TextInput}
 
 
 class Unsubscribe(forms.Form):

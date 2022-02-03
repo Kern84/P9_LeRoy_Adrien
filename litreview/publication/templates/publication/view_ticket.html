@@ -12,8 +12,12 @@
 <h2>{{ ticket.title }}</h2>
 <p>{{ ticket.description }}</p>
 <img src="{{ ticket.image.url }}" alt="IMG">
+{{ticket.id}}
+{{review.ticket.id}}
+{% if ticket.id == ticket.id %}
 <p class="answer"><a href="{% url 'answer_ticket' ticket.id %}">Répondre à la demande</a></p>
-{% if ticket.user == user %}
+{% endif %}
+{% if ticket.user in review.choice_set.all %}
 <p class="modify"><a href="{% url 'edit_ticket' ticket.id %}">Modifier la demande</a></p>
 {% endif %}
 <button type="submit"><a href="{% url 'home' %}">Retour</a></button>

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <h2>Abonnements</h2>
+<hr>
 <h3>Suivre d'autres utilisateurs</h3>
 <form method="post">
     {{ form.as_p }}
@@ -14,9 +15,7 @@
 </ul>
 {% endfor %}
 <h3>Abonnés</h3>
-{% for subs in subscription %}
 <ul>
-    <li>{{ subs }}</li>
+    <li>{{ subscription }}</li>
 </ul>
-{% endfor %}
 {% endblock content %}

@@ -11,7 +11,38 @@
         <p>{{ review.time_created }}</p>
     </div>
     <h2>{{ review.headline }}</h2>
-    <p class="ratings">Rating : {{ review.rating }} / 5</p>
+    <p class="ratings">Rating :
+        {% if review.rating == 0 %}<span class="fa fa-star"></span><span class="fa fa-star"></span><span
+            class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>
+        {% endif %}
+
+        {% if review.rating == 1 %}
+        <span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span
+            class="fa fa-star"></span><span class="fa fa-star"></span>
+        {% endif %}
+
+        {% if review.rating == 2 %}
+        <span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span
+            class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>
+        {% endif %}
+
+        {% if review.rating == 3 %}
+        <span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span
+            class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>
+        {% endif %}
+
+        {% if review.rating == 4 %}
+        <span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span
+            class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span>
+        {% endif %}
+
+        {% if review.rating == 5 %}
+        <span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span
+            class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span
+            class="fa fa-star checked"></span>
+        {% endif %}
+        {{ review.rating }}
+    </p>
     <img src="{{ review.ticket.image.url }}" alt="IMG">
     <p>{{ review.body }}</p>
     <div class="ticket_in_review">

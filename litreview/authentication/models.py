@@ -3,22 +3,6 @@ from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
 
-class UserFollows(models.Model):
-    users = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
-    followed_user = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="suivi",
-    )
-
-    class Meta:
-        unique_together = (
-            "users",
-            "followed_user",
-        )
-
-
 class User(AbstractUser):
 
     SUBSCRIBER = "SUBSCRIBER"
@@ -31,6 +15,29 @@ class User(AbstractUser):
         "self",
         symmetrical=False,
         verbose_name="suivre",
+        blank=True,
+        related_name="follows",
     )
 
-    follows = models.ManyToManyField(UserFollows)
+
+class UserFollows(models.Model):
+    user = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="following",
+    )
+
+    followed_user = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="followed_by",
+    )
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        unique_together = (
+            "user",
+            "followed_user",
+        )
