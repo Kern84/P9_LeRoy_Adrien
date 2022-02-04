@@ -7,7 +7,7 @@
     {% if instance|model_type == 'Review' %}
     <div class="post">
         <div class="heading">
-            {% if review.user == user %}
+            {% if instance.user == user %}
             <p>{% get_poster_display instance.user %} avez publié une critique</p>
             {% else %}
             <p>{{ instance.user }} à publié une critique</p>

@@ -17,6 +17,8 @@ class User(AbstractUser):
         verbose_name="suivre",
         blank=True,
         related_name="follows",
+        through="UserFollows",
+        through_fields=("user", "followed_user"),
     )
 
 
