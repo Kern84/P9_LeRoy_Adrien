@@ -22,6 +22,9 @@ a:visited{
     max-width: max-content;
     margin: 20px auto;
 }
+.alert-success{
+    color:red;
+}
 
 /* Rating stars */
 .checked{
@@ -95,4 +98,14 @@ a{
 }
 .heading p{
     padding: 0 50px;
+}
+
+/* Subscription */
+.subscriber{
+    display: flex;
+}
+.sub{
+    border: solid black 1px;
+    flex: 1;
+    padding: 1em;
 }

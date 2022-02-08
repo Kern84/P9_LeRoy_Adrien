@@ -3,19 +3,23 @@
 <h2>Abonnements</h2>
 <hr>
 <h3>Suivre d'autres utilisateurs</h3>
+<p>{% include 'authentication/messages.html' %}</p>
 <form method="post">
-    {{ form.as_p }}
+    {{ form }}
     {% csrf_token %}
     <button type="submit">Envoyer</button>
 </form>
 <h3>Abonnements</h3>
 {% for sub in subscriber %}
-<ul>
-    <li>{{ sub }} <a href="{% url 'subscription' %}">Désabonner</a></li>
+<ul class="subscriber">
+    <li class="sub">{{ sub }}</li>
+    <a class="sub" href="{% url 'unsubscribe' sub.id %}">Désabonner</a>
 </ul>
 {% endfor %}
 <h3>Abonnés</h3>
+{% for subs in subscription %}
 <ul>
-    <li>{{ subscription }}</li>
+    <li>{{ subs }}</li>
 </ul>
+{% endfor %}
 {% endblock content %}

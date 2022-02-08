@@ -41,6 +41,11 @@ urlpatterns = [
     path("post/", publication.views.post, name="post"),
     path("subscription/", authentication.views.subscriptions, name="subscription"),
     path(
+        "subscription/delete/<int:sub_id>",
+        authentication.views.unfollow,
+        name="unsubscribe",
+    ),
+    path(
         "change-password/",
         PasswordChangeView.as_view(
             template_name="authentication/password_change_form.html"
