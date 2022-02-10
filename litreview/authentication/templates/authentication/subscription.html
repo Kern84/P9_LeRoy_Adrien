@@ -2,24 +2,42 @@
 {% block content %}
 <h2>Abonnements</h2>
 <hr>
+
 <h3>Suivre d'autres utilisateurs</h3>
 <p>{% include 'authentication/messages.html' %}</p>
 <form method="post">
+    <input type="hidden" class="hidden" value="add" name="role">
     {{ form }}
     {% csrf_token %}
     <button type="submit">Envoyer</button>
 </form>
+
 <h3>Abonnements</h3>
+{% if subscriber %}
 {% for sub in subscriber %}
 <ul class="subscriber">
     <li class="sub">{{ sub }}</li>
-    <a class="sub" href="{% url 'unsubscribe' sub.id %}">Désabonner</a>
+    <form method="post" action="{% url 'subscription' %}" class="sub">
+        {% csrf_token %}
+        <input type="hidden" class="hidden" value="delete" role="delete" name="role">
+        <input type="hidden" class="hidden" value="{{ sub.id }}" name="sub_id">
+        <button class="btn btn-danger" type="submit">Se désabonner</button>
+    </form>
 </ul>
 {% endfor %}
+{% else %}
+<p>Vous n'êtes abonné à personne</p>
+{% endif %}
+
+
 <h3>Abonnés</h3>
+{% if subscription %}
 {% for subs in subscription %}
 <ul>
-    <li>{{ subs }}</li>
+    <li class="sub">{{ subs.user }}</li>
 </ul>
 {% endfor %}
+{% else %}
+<p>Vous n'avez pas d'abonnés</p>
+{% endif %}
 {% endblock content %}

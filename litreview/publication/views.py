@@ -3,23 +3,31 @@ from django.forms import forms
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from . import forms, models
+from authentication.models import UserFollows
 from django.core.paginator import Paginator
-from django.db.models import Q
 
 
 @login_required
 def home(request):
-    reviews = models.Review.objects.filter(
-        Q(user__in=request.user.following_user.all()) | Q(user=request.user)
-    )
-    tickets = models.Ticket.objects.filter(
-        user__in=request.user.following_user.all()
-    ).exclude(review__in=reviews)
+    tickets = models.Ticket.objects.filter(user=request.user)
+    reviews = models.Review.objects.filter(user=request.user)
+    unfollowed_review = models.Review.objects.filter(ticket__user=request.user)
+
+    followings = UserFollows.objects.filter(user=request.user)
+    for following in followings:
+        tickets = tickets | models.Ticket.objects.filter(user=following.followed_user)
+        reviews = (
+            reviews
+            | models.Review.objects.filter(user=following.followed_user)
+            | unfollowed_review
+        )
+
     reviews_and_tickets = sorted(
         chain(reviews, tickets),
         key=lambda instance: instance.time_created,
         reverse=True,
     )
+
     paginator = Paginator(reviews_and_tickets, 5)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
@@ -32,11 +40,13 @@ def home(request):
 def post(request):
     reviews = models.Review.objects.filter(user=request.user)
     tickets = models.Ticket.objects.filter(user=request.user)
+
     reviews_and_tickets = sorted(
         chain(reviews, tickets),
         key=lambda instance: instance.time_created,
         reverse=True,
     )
+
     paginator = Paginator(reviews_and_tickets, 5)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)

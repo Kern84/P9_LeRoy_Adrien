@@ -11,16 +11,6 @@ class User(AbstractUser):
 
     role = models.CharField(max_length=30, choices=ROLE_CHOICES, verbose_name="Rôle")
 
-    following_user = models.ManyToManyField(
-        "self",
-        symmetrical=False,
-        verbose_name="suivre",
-        blank=True,
-        related_name="follows",
-        through="UserFollows",
-        through_fields=("user", "followed_user"),
-    )
-
 
 class UserFollows(models.Model):
     user = models.ForeignKey(
@@ -36,7 +26,7 @@ class UserFollows(models.Model):
     )
 
     def __str__(self):
-        return self.user.username
+        return self.followed_user.username
 
     class Meta:
         unique_together = (

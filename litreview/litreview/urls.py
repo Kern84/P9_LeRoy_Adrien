@@ -13,7 +13,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from re import template
 from django.contrib import admin
 from django.urls import path
 import authentication.views
@@ -40,11 +39,6 @@ urlpatterns = [
     path("home/", publication.views.home, name="home"),
     path("post/", publication.views.post, name="post"),
     path("subscription/", authentication.views.subscriptions, name="subscription"),
-    path(
-        "subscription/delete/<int:sub_id>",
-        authentication.views.unfollow,
-        name="unsubscribe",
-    ),
     path(
         "change-password/",
         PasswordChangeView.as_view(
