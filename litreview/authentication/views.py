@@ -47,9 +47,9 @@ def subscriptions(request):
 
         elif request.POST.get("role") == "delete":
             subscriber_id = request.POST.get("sub_id")
-            subscriber_to_unfollow = models.UserFollows.objects.get(
-                followed_user=subscriber_id
-            )
+            subscriber_to_unfollow = models.UserFollows.objects.filter(
+                user=request.user
+            ).get(followed_user=subscriber_id)
             if subscriber_to_unfollow:
                 subscriber_to_unfollow.delete()
                 return redirect("subscription")
