@@ -9,6 +9,11 @@ from django.core.paginator import Paginator
 
 @login_required
 def home(request):
+    """
+    View for the Flux page.
+    Shows the tickets and reviews of the user, the followed users and
+    unfollowed users who respond to our requests.
+    """
     tickets = models.Ticket.objects.filter(user=request.user)
     reviews = models.Review.objects.filter(user=request.user)
     unfollowed_review = models.Review.objects.filter(ticket__user=request.user)
@@ -38,6 +43,7 @@ def home(request):
 
 @login_required
 def post(request):
+    """View for the Posts page, where the user post are."""
     reviews = models.Review.objects.filter(user=request.user)
     tickets = models.Ticket.objects.filter(user=request.user)
 
@@ -57,6 +63,7 @@ def post(request):
 
 @login_required
 def create_ticket(request):
+    """View for the creation of a ticket."""
     form = forms.TicketForm()
     if request.method == "POST":
         form = forms.TicketForm(request.POST, request.FILES)
@@ -70,6 +77,7 @@ def create_ticket(request):
 
 @login_required
 def create_review(request):
+    """View for the creation of a review."""
     ticket_form = forms.TicketForm()
     review_form = forms.ReviewForm()
     if request.method == "POST":
@@ -80,6 +88,7 @@ def create_review(request):
             ticket.user = request.user
             ticket.save()
             review = review_form.save(commit=False)
+            review.rating = review_form.cleaned_data["note"]
             review.user = request.user
             review.ticket = ticket
             review.save()
@@ -93,18 +102,21 @@ def create_review(request):
 
 @login_required
 def view_review(request, review_id):
+    """View to show the complete informations of a rreview."""
     review = get_object_or_404(models.Review, id=review_id)
     return render(request, "publication/view_review.html", {"review": review})
 
 
 @login_required
 def view_ticket(request, ticket_id):
+    """View to show the complete informations of a ticket."""
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
     return render(request, "publication/view_ticket.html", {"ticket": ticket})
 
 
 @login_required
 def edit_review(request, review_id):
+    """View to modify or delete a review."""
     review = get_object_or_404(models.Review, id=review_id)
     edit_form = forms.ReviewForm(instance=review)
     delete_form = forms.DeleteForm()
@@ -128,6 +140,7 @@ def edit_review(request, review_id):
 
 @login_required
 def edit_ticket(request, ticket_id):
+    """View to modify or delete a ticket."""
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
     edit_form = forms.TicketForm(instance=ticket)
     delete_form = forms.DeleteForm()
@@ -151,6 +164,7 @@ def edit_ticket(request, ticket_id):
 
 @login_required
 def answer_ticket(request, ticket_id):
+    """View to answer a user or followed users ticket."""
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
     review_form = forms.ReviewForm()
     if request.method == "POST":

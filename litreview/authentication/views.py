@@ -10,6 +10,7 @@ from django.contrib import messages
 
 
 def signup_page(request):
+    """View for creating a new user."""
     form = forms.SignupForm()
     if request.method == "POST":
         form = forms.SignupForm(request.POST)
@@ -22,6 +23,10 @@ def signup_page(request):
 
 @login_required
 def subscriptions(request):
+    """
+    View for subscribe or unsubscribe to someone.
+    Print users followed and followed by.
+    """
     list_user = models.User.objects.all()
     form = forms.UserFollowsForm()
 

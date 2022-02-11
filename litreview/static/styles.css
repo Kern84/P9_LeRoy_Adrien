@@ -109,3 +109,9 @@ a{
     flex: 1;
     padding: 1em;
 }
+
+/* Note radiobutton */
+#id_note{
+    display: flex;
+    justify-content: center;
+}
